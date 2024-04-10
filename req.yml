@@ -2,4 +2,6 @@ langchain-google-genai
 langchain
 openai
 python-environ
-psycopg2 
+psycopg2
+streamlit
+unidecode

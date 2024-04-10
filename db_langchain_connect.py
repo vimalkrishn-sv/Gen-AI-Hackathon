@@ -1,6 +1,6 @@
 from langchain_community.utilities import SQLDatabase
 from langchain.chains import create_sql_query_chain
-from langchain_google_genai import ChatGoogleGenerativeAI
+from llm import LLm_Init
 from operator import itemgetter
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
@@ -11,13 +11,14 @@ from langchain_core.prompts import ChatPromptTemplate
 import environ
 env = environ.Env()
 environ.Env.read_env()
+llm_obj = LLm_Init()
 
 # Setup database
 db = SQLDatabase.from_uri(
     f"postgresql+psycopg2://postgres:{env('DBPASS')}@localhost:5432/{env('DATABASE')}",
 )
 
-llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0, convert_system_message_to_human=True)
+llm = llm_obj.llm
 
 answer_prompt = PromptTemplate.from_template(
     """Given the following user question, corresponding SQL query, and SQL result, answer the user question.
